@@ -7,6 +7,9 @@ import java.util.List; /**
  */
 public class BowlingGame {
     public int score(List<Frame> frameList) throws Exception {
+        if(frameList == null || frameList.isEmpty()){
+            throw new Exception("input is wrong");
+        }
         int score = 0;
         for (int i = 0; i < frameList.size() - 1; i++) {
             if(frameList.get(i).getThrowNumber() == 1){
