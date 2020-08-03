@@ -1,5 +1,7 @@
 package twu;
 
+import java.util.Arrays;
+
 /**
  * Created by wzw on 2020/8/3
  *
@@ -14,11 +16,7 @@ public class Frame {
         this.pinNumber = pinNumber;
     }
     public int sumPinNumber(){
-        int sum = 0;
-        for (int i = 0; i < pinNumber.length; i++) {
-            sum += pinNumber[i];
-        }
-        return sum;
+        return Arrays.stream(pinNumber).sum();
     }
 
     public int getThrowNumber() {
