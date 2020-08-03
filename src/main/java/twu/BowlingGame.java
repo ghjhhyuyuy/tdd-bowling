@@ -34,12 +34,21 @@ public class BowlingGame {
     }
 
     private int sumStrike(List<Frame> frameList, int index) {
-        if (index + 1 == frameList.size() - 1 || frameList.get(index + 1).getThrowNumber() != 1) {
+        if (isNextLastFrame(frameList,index) || !isNextFrameStrike(frameList, index)) {
             return frameList.get(index).sumPinNumber() + frameList.get(index + 1).getPinNumber()[0] + frameList.get(index + 1).getPinNumber()[1];
-        } else if (index + 2 == frameList.size() - 1) {
+        } else if (isNextNextLastFrame(frameList,index)) {
             return frameList.get(index).sumPinNumber() + frameList.get(index + 1).sumPinNumber() + frameList.get(index + 2).getPinNumber()[0];
         } else {
             return frameList.get(index).sumPinNumber() + frameList.get(index + 1).sumPinNumber() + frameList.get(index + 2).getPinNumber()[0];
         }
+    }
+    private boolean isNextLastFrame(List<Frame> frameList, int index){
+        return index + 1 == frameList.size() - 1;
+    }
+    private boolean isNextNextLastFrame(List<Frame> frameList, int index){
+        return index + 2 == frameList.size() - 1;
+    }
+    private boolean isNextFrameStrike(List<Frame> frameList, int index){
+        return frameList.get(index + 1).getThrowNumber() == 1;
     }
 }
