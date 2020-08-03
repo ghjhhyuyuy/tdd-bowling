@@ -13,11 +13,11 @@ public class BowlingGame {
             throw new Exception("input is wrong");
         }
         int score = 0;
-        int strikeThrowNumber = 1;
+        int spareThrowNumber = 1;
         int fullScore = 10;
         int theLastFrameIndex = frameList.size() - 1;
         for (int i = 0; i < theLastFrameIndex; i++) {
-            if (frameList.get(i).getThrowNumber() == strikeThrowNumber) {
+            if (frameList.get(i).getThrowNumber() == spareThrowNumber) {
                 score += sumStrike(frameList, i);
             } else if (frameList.get(i).sumPinNumber() == fullScore) {
                 score += sumSpare(frameList, i);
@@ -34,21 +34,19 @@ public class BowlingGame {
     }
 
     private int sumStrike(List<Frame> frameList, int index) {
-        if (isNextLastFrame(frameList,index) || !isNextFrameStrike(frameList, index)) {
-            return frameList.get(index).sumPinNumber() + frameList.get(index + 1).getPinNumber()[0] + frameList.get(index + 1).getPinNumber()[1];
-        } else if (isNextNextLastFrame(frameList,index)) {
-            return frameList.get(index).sumPinNumber() + frameList.get(index + 1).sumPinNumber() + frameList.get(index + 2).getPinNumber()[0];
-        } else {
-            return frameList.get(index).sumPinNumber() + frameList.get(index + 1).sumPinNumber() + frameList.get(index + 2).getPinNumber()[0];
+        int strikeThrowNumber = 2;
+        if(frameList.get(index + 1).getPinNumber().length >= strikeThrowNumber){
+            return sumScoreJustFormNextFrame(frameList, index);
+        }else {
+            return sumScoreFromNextTwoFrame(frameList, index);
         }
     }
-    private boolean isNextLastFrame(List<Frame> frameList, int index){
-        return index + 1 == frameList.size() - 1;
+
+    private int sumScoreFromNextTwoFrame(List<Frame> frameList, int index) {
+        return frameList.get(index).sumPinNumber() + frameList.get(index + 1).sumPinNumber() + frameList.get(index + 2).getPinNumber()[0];
     }
-    private boolean isNextNextLastFrame(List<Frame> frameList, int index){
-        return index + 2 == frameList.size() - 1;
-    }
-    private boolean isNextFrameStrike(List<Frame> frameList, int index){
-        return frameList.get(index + 1).getThrowNumber() == 1;
+
+    private int sumScoreJustFormNextFrame(List<Frame> frameList, int index) {
+        return frameList.get(index).sumPinNumber() + frameList.get(index + 1).getPinNumber()[0] + frameList.get(index + 1).getPinNumber()[1];
     }
 }
