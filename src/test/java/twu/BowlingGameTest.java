@@ -1,6 +1,5 @@
 package twu;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,8 +32,8 @@ public class BowlingGameTest {
         for (int i = 0; i < notSpareAndStrikeTime; i++) {
             spareInLastFrameList.add(notSpareAndStrikeFrame);
         }
-        strikeInLastFrameList = spareInLastFrameList;
-        notSpareAndStrikeInLastFrameList = spareInLastFrameList;
+        strikeInLastFrameList.addAll(spareInLastFrameList);
+        notSpareAndStrikeInLastFrameList.addAll(spareInLastFrameList);
         strikeInLastFrameList.add(strikeInLastFrame);
         spareInLastFrameList.add(spareInLastFrame);
         notSpareAndStrikeInLastFrameList.add(notSpareAndStrikeFrame);
@@ -42,23 +41,23 @@ public class BowlingGameTest {
     @Test
     void should_return_right_score_when_last_frame_strike() throws Exception {
         BowlingGame bowlingGame = new BowlingGame();
-        int strikeInLastFrameScore = 194;
+        int strikeInLastFrameScore = 166;
         assertEquals(strikeInLastFrameScore,bowlingGame.score(strikeInLastFrameList));
     }
     @Test
     void should_return_right_score_when_last_frame_spare() throws Exception {
         BowlingGame bowlingGame = new BowlingGame();
-        int spareInLastFrameScore = 189;
+        int spareInLastFrameScore = 161;
         assertEquals(spareInLastFrameScore,bowlingGame.score(spareInLastFrameList));
     }
     @Test
     void should_return_right_score_when_last_frame_not_strike_or_spare() throws Exception {
         BowlingGame bowlingGame = new BowlingGame();
-        int notSpareAndStrikeInLastFrameScore = 180;
+        int notSpareAndStrikeInLastFrameScore = 152;
         assertEquals(notSpareAndStrikeInLastFrameScore,bowlingGame.score(notSpareAndStrikeInLastFrameList));
     }
     @Test
-    void should_throw_exception_when_frameList_null_or_empty() throws Exception {
+    void should_throw_exception_when_frameList_null_or_empty(){
         BowlingGame bowlingGame = new BowlingGame();
         Throwable exceptionInputEmpty = assertThrows(Exception.class, () -> bowlingGame.score(new ArrayList<>()));
         Throwable exceptionInputNull = assertThrows(Exception.class, () -> bowlingGame.score(null));
